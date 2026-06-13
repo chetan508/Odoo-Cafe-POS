@@ -28,9 +28,9 @@ export default function ReceiptModal({ order, customer, table, onClose }: Receip
   const totalTaxRate = order.items.reduce((acc, itm) => acc + (itm.tax / 100) * itm.lineTotal, 0);
 
   // Dynamic UPI payment QR generation URL
-  const upiVpa = "cafeflow@ybl";
+  const upiVpa = "Cafe POS@ybl";
   const upiAmount = order.total.toFixed(2);
-  const upiestr = `upi://pay?pa=${upiVpa}&pn=CafeFlow%20POS&am=${upiAmount}&cu=INR&tn=Order%20${order.orderNumber}`;
+  const upiestr = `upi://pay?pa=${upiVpa}&pn=Cafe POS%20POS&am=${upiAmount}&cu=INR&tn=Order%20${order.orderNumber}`;
   const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(upiestr)}`;
 
   // Simulated PDF download
@@ -84,7 +84,7 @@ export default function ReceiptModal({ order, customer, table, onClose }: Receip
     setWhatsappShared(true);
     setTimeout(() => setWhatsappShared(false), 3000);
     // Open standard whatsapp text link
-    const text = `Thanks for dining at CafeFlow! Your receipts for Order ${order.orderNumber} is ready. Total: ₹${order.total.toFixed(2)}. Have an awesome day!`;
+    const text = `Thanks for dining at Cafe POS! Your receipts for Order ${order.orderNumber} is ready. Total: ₹${order.total.toFixed(2)}. Have an awesome day!`;
     window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, "_blank");
   };
 
@@ -179,7 +179,7 @@ export default function ReceiptModal({ order, customer, table, onClose }: Receip
               style={{ fontFamily: "'Courier New', Courier, monospace" }}
             >
               <div className="text-center">
-                <h1 className="text-xl font-bold uppercase tracking-widest text-neutral-800">CafeFlow</h1>
+                <h1 className="text-xl font-bold uppercase tracking-widest text-neutral-800">Cafe POS</h1>
                 <p className="text-[11px] text-neutral-500">12, Green Park Avenue, Delhi</p>
                 <p className="text-[11px] text-neutral-500">Tel: +91 99882 11000</p>
               </div>
@@ -255,7 +255,7 @@ export default function ReceiptModal({ order, customer, table, onClose }: Receip
               <div className="text-center text-[10px] text-neutral-500">
                 <p>Payment Method: <span className="font-bold uppercase text-neutral-700">{order.paymentMethod || "UPI"}</span></p>
                 <p className="mt-4">*** THANK YOU FOR DINING ***</p>
-                <p>Powered by CafeFlow POS</p>
+                <p>Powered by Cafe POS</p>
               </div>
             </div>
           </div>

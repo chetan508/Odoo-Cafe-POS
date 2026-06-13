@@ -1,4 +1,4 @@
-export type Role = 'admin' | 'employee' | 'kitchen';
+export type Role = 'admin' | 'cashier' | 'kitchen';
 
 export interface User {
   id: string;
@@ -84,7 +84,7 @@ export interface OrderItem {
   notes?: string;
 }
 
-export type OrderStatus = 'draft' | 'paid' | 'cancelled';
+export type OrderStatus = 'draft' | 'to_cook' | 'preparing' | 'completed' | 'paid' | 'cancelled';
 
 export interface Order {
   id: string;
@@ -98,6 +98,12 @@ export interface Order {
   discount: number;
   total: number;
   paymentMethod?: 'cash' | 'card' | 'upi';
+  paymentDetails?: {
+    amountReceived?: number;
+    changeDue?: number;
+    transactionReference?: string;
+    upiVpa?: string;
+  };
   status: OrderStatus;
   createdAt: string;
   notes?: string;

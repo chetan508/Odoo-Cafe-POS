@@ -1,5 +1,5 @@
 {
-  "name": "CafeFlow POS",
+  "name": "Cafe POS",
   "description": "Smart Restaurant Management System with an elegant dashboard, real-time Kitchen Display, QR receipts, automated promotions, and AI sales forecasting.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]

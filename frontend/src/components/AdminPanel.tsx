@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Product, Category, Floor, Table, User, Coupon, Promotion, Order, Session } from "../types";
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, PieChart, Pie, Cell, BarChart, Bar, Legend } from "recharts";
-import { LayoutDashboard, ShoppingCart, Layers, Grid, Users, Settings, Tag, Shield, FileSpreadsheet, CreditCard, LogOut, Search, Plus, Trash2, Edit2, Key, Archive, Check, X, FileText, ArrowUpRight, TrendingUp, DollarSign, ListOrdered, Percent, Eye, Sparkles, BrainCircuit, Globe, Moon, Sun, Award } from "lucide-react";
+import { LayoutDashboard, ShoppingCart, Layers, Grid, Users, Settings, Tag, Shield, FileSpreadsheet, CreditCard, LogOut, Search, Plus, Trash2, Edit2, Key, Archive, Check, X, FileText, ArrowUpRight, TrendingUp, DollarSign, ListOrdered, Percent, Eye, Sparkles, Coffee, Globe, Moon, Sun, Award } from "lucide-react";
+import { APP_NAME, DEFAULT_UPI_VPA, getAuthToken } from "../constants";
 
 interface AdminPanelProps {
   products: Product[];
@@ -104,8 +105,8 @@ export default function AdminPanel({
   const [tableForm, setTableForm] = useState({ tableNumber: "", seats: 4, floorId: "", active: true, status: "available" as any });
   const [couponForm, setCouponForm] = useState({ code: "", discountType: "fixed" as any, discountValue: 50, active: true });
   const [promoForm, setPromoForm] = useState({ promotionType: "order_discount" as any, minimumQuantity: 3, minimumOrderAmount: 1000, discountType: "fixed" as any, discountValue: 100, active: true, description: "" });
-  const [empForm, setEmpForm] = useState({ name: "", email: "", password: "", role: "employee" as any, status: "active" as any });
-  const [paySettingsForm, setPaySettingsForm] = useState({ cashEnabled: true, cardEnabled: true, upiEnabled: true, upiVpa: "cafeflow@ybl" });
+  const [empForm, setEmpForm] = useState({ name: "", email: "", password: "", role: "cashier" as any, status: "active" as any });
+  const [paySettingsForm, setPaySettingsForm] = useState({ cashEnabled: true, cardEnabled: true, upiEnabled: true, upiVpa: DEFAULT_UPI_VPA });
 
   // Settings configs
   const [darkMode, setDarkMode] = useState<boolean>(false);
@@ -115,13 +116,13 @@ export default function AdminPanel({
   // Synchronize payment settings
   useEffect(() => {
     fetch("/api/payment-settings", {
-      headers: { "Authorization": `Bearer ${localStorage.getItem("cafeflow_token")}` }
+      headers: { "Authorization": `Bearer ${getAuthToken()}` }
     })
       .then(res => res.json())
       .then(data => {
         if (data && data.upiVpa) setPaySettingsForm(data);
       })
-      .catch(err => console.error(err));
+      .catch(() => undefined);
   }, []);
 
   // Fetch AI Forecasting Report
@@ -132,14 +133,14 @@ export default function AdminPanel({
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("cafeflow_token")}`,
+          "Authorization": `Bearer ${getAuthToken()}`,
         },
         body: JSON.stringify({ filterDays: reportRange }),
       });
       const data = await response.json();
       setAiForecasting(data);
-    } catch (err) {
-      console.error(err);
+    } catch {
+      setAiForecasting(null);
     } finally {
       setLoadingAI(false);
     }
@@ -187,7 +188,7 @@ export default function AdminPanel({
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = `CafeFlow_Revenue_Report_${new Date().toISOString().split("T")[0]}.csv`;
+    link.download = `Cafe_POS_Revenue_Report_${new Date().toISOString().split("T")[0]}.csv`;
     link.click();
   };
 
@@ -198,7 +199,7 @@ export default function AdminPanel({
       printWindow.document.write(`
         <html>
           <head>
-            <title>CafeFlow Analytics PDF Report</title>
+            <title>${APP_NAME} Analytics PDF Report</title>
             <style>
               body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; padding: 40px; color: #333; line-height: 1.6; }
               h1 { font-size: 24px; color: #7c3aed; }
@@ -208,7 +209,7 @@ export default function AdminPanel({
             </style>
           </head>
           <body>
-            <h1>CafeFlow POS – Smart Analytics Dashboard Report</h1>
+            <h1>${APP_NAME} - Revenue Dashboard Report</h1>
             <p>Generated on: ${new Date().toLocaleDateString()}</p>
             <p><strong>Total Orders:</strong> ${totalOrders} | <strong>Revenue:</strong> ₹${totalRevenue.toFixed(2)} | <strong>Average Ticket:</strong> ₹${averageOrderValue.toFixed(2)}</p>
             <h3>Recent Paid Transactions</h3>
@@ -331,11 +332,11 @@ export default function AdminPanel({
     <div className={`flex flex-1 h-[89vh] font-sans overflow-hidden bg-gray-50`}>
       
       {/* Admin Sidebar */}
-      <aside className="w-64 border-r border-gray-150 bg-white flex flex-col justify-between overflow-y-auto">
+      <aside className="w-64 border-r border-[#E7DCCB] bg-[#FFFDF9] flex flex-col justify-between overflow-y-auto">
         <div className="py-4">
-          <div className="px-6 pb-4 border-b border-gray-100 flex items-center gap-2">
-            <BrainCircuit className="h-5 w-5 text-purple-600" />
-            <span className="font-display font-black text-sm tracking-wider text-purple-950">CafeFlow Office</span>
+          <div className="px-6 pb-4 border-b border-[#E7DCCB] flex items-center gap-2">
+            <Coffee className="h-5 w-5 text-[#6F4E37]" />
+            <span className="font-display font-black text-sm tracking-wider text-[#3E2723]">Cafe POS Office</span>
           </div>
 
           <nav className="mt-4 px-3 space-y-1">
@@ -436,14 +437,14 @@ export default function AdminPanel({
               </div>
             </div>
 
-            {/* AI Sales Forecasting Box */}
+            {/* Business Forecasting Box */}
             <div className="rounded-2xl border border-purple-200 bg-purple-50/40 p-6 flex flex-col md:flex-row gap-6 items-start relative overflow-hidden">
               <div className="absolute top-0 right-0 h-32 w-32 rounded-full bg-purple-200/20 blur-2xl pointer-events-none" />
               
               <div className="flex-1">
                 <div className="flex items-center gap-2 text-purple-900">
                   <Sparkles className="h-5 w-5 text-purple-600 pulsing-ring rounded-full" />
-                  <h4 className="font-display font-extrabold text-sm tracking-wide uppercase">Generative AI Business Forecasts (Gemini Active)</h4>
+                  <h4 className="font-display font-extrabold text-sm tracking-wide uppercase">Business Forecasts</h4>
                 </div>
                 
                 {loadingAI ? (
@@ -458,7 +459,7 @@ export default function AdminPanel({
                     <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {/* Growth Insights */}
                       <div className="rounded-xl bg-white/70 p-3.5 border border-purple-100">
-                        <span className="text-[10px] font-bold text-purple-700 uppercase tracking-wider block">Intelligent Actionable insights</span>
+                        <span className="text-[10px] font-bold text-purple-700 uppercase tracking-wider block">Actionable insights</span>
                         <ul className="mt-2 space-y-1.5">
                           {aiForecasting.growthInsights?.map((ins: string, idx: number) => (
                             <li key={idx} className="text-[10px] text-gray-700 flex items-start gap-1.5 leading-normal">
@@ -472,17 +473,17 @@ export default function AdminPanel({
                       {/* Best Seller */}
                       <div className="rounded-xl bg-white/70 p-3.5 border border-purple-100 flex flex-col justify-between">
                         <div>
-                          <span className="text-[10px] font-bold text-purple-700 uppercase tracking-wider block">AI Predicted Best Seller</span>
+                          <span className="text-[10px] font-bold text-purple-700 uppercase tracking-wider block">Predicted Best Seller</span>
                           <span className="text-xs font-black text-gray-900 mt-2 block">{aiForecasting.predictedBestSeller}</span>
                         </div>
                         <div className="mt-2 text-[10px] text-green-600 font-semibold flex items-center gap-1">
-                          <Check className="h-3 w-3" /> System matched for upcoming cycles
+                          <Check className="h-3 w-3" /> Matched for upcoming service cycles
                         </div>
                       </div>
                     </div>
                   </div>
                 ) : (
-                  <p className="text-xs text-gray-500 mt-2">Activate intelligence predictions to model sales trends.</p>
+                  <p className="text-xs text-gray-500 mt-2">Refresh the forecast to model sales trends.</p>
                 )}
               </div>
 
@@ -490,8 +491,8 @@ export default function AdminPanel({
                 onClick={triggerAIForecast}
                 className="rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold px-4 py-2.5 text-xs flex items-center gap-2 shadow transition cursor-pointer self-end md:self-auto shrink-0"
               >
-                <BrainCircuit className="h-4 w-4" />
-                Regenerate AI Forecast
+                <Coffee className="h-4 w-4" />
+                Refresh Forecast
               </button>
             </div>
 
@@ -1139,7 +1140,7 @@ export default function AdminPanel({
               <button
                 onClick={() => {
                   setActiveEditingId("new_emp");
-                  setEmpForm({ name: "", email: "", password: "", role: "employee" as any, status: "active" as any });
+                  setEmpForm({ name: "", email: "", password: "", role: "cashier" as any, status: "active" as any });
                 }}
                 className="rounded-xl bg-purple-600 px-4 py-2.5 text-xs font-bold text-white hover:bg-purple-700 flex items-center gap-1 cursor-pointer"
               >
@@ -1177,7 +1178,7 @@ export default function AdminPanel({
                       required
                       value={empForm.email}
                       onChange={(e) => setEmpForm({ ...empForm, email: e.target.value })}
-                      placeholder="sarah@cafeflow.com"
+                      placeholder="cashier@cafepos.com"
                       className="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-xs outline-none focus:border-purple-500"
                     />
                   </div>
@@ -1201,7 +1202,7 @@ export default function AdminPanel({
                       onChange={(e) => setEmpForm({ ...empForm, role: e.target.value as any })}
                       className="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-xs outline-none text-gray-600 focus:border-purple-500"
                     >
-                      <option value="employee">Employee / Cashier</option>
+                      <option value="cashier">Cashier</option>
                       <option value="kitchen">Kitchen Staff</option>
                       <option value="admin">System Admin</option>
                     </select>
@@ -1544,7 +1545,7 @@ export default function AdminPanel({
                     value={paySettingsForm.upiVpa}
                     onChange={(e) => setPaySettingsForm({ ...paySettingsForm, upiVpa: e.target.value })}
                     className="mt-1 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm font-semibold tracking-wide text-gray-800 outline-none focus:border-purple-500"
-                    placeholder="e.g. cafeflow@ybl"
+                    placeholder="e.g. Cafe POS@ybl"
                   />
                   <p className="mt-1 text-[10px] text-gray-400">Merchant sandbox dynamic amount routing is bounded to this address.</p>
                 </div>
@@ -1605,7 +1606,7 @@ export default function AdminPanel({
               </div>
 
               <div>
-                <label className="text-[10px] font-bold text-gray-400 uppercase">Server cashier employee</label>
+                <label className="text-[10px] font-bold text-gray-400 uppercase">Cashier</label>
                 <select
                   value={reportEmployee}
                   onChange={(e) => setReportEmployee(e.target.value)}

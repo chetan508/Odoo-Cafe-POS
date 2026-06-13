@@ -4,7 +4,8 @@ import crypto from "crypto";
 import { createServer as createViteServer } from "vite";
 import { GoogleGenAI, Type } from "@google/genai";
 import dotenv from "dotenv";
-import { connectDB, prisma } from "./db";
+import fs from "fs";
+import { connectDB, prisma } from "./database/db";
 
 dotenv.config();
 
@@ -49,6 +50,10 @@ function broadcastEvent(type: string, data: any) {
 // ==========================================
 const JWT_SECRET = process.env.JWT_SECRET || "cafeflow-super-secure-secret-shhhhh";
 
+function normalizeRole(role: string): string {
+  return role === "employee" ? "cashier" : role;
+}
+
 // Custom light JWT tokens algorithm for seamless zero-dependency deployment
 function createToken(payload: { id: string; name: string; email: string; role: string }) {
   const header = Buffer.from(JSON.stringify({ alg: "HS256", typ: "JWT" })).toString("base64url");
@@ -69,6 +74,7 @@ function verifyTokenAndGetUser(token: string) {
 
     const payload = JSON.parse(Buffer.from(payloadStr, "base64url").toString("utf8"));
     if (payload.exp && Date.now() / 1000 > payload.exp) return null; // Expired
+    payload.role = normalizeRole(payload.role);
     return payload;
   } catch {
     return null;
@@ -131,9 +137,9 @@ app.post("/api/auth/signup", async (req, res) => {
       }
     });
 
-    const token = createToken({ id: newUserId, name: newUser.name, email: newUser.email, role: newUser.role });
+    const token = createToken({ id: newUserId, name: newUser.name, email: newUser.email, role: normalizeRole(newUser.role) });
     const { password: _, ...userNoPassword } = newUser;
-    res.json({ token, user: userNoPassword });
+    res.json({ token, user: { ...userNoPassword, role: normalizeRole(userNoPassword.role) } });
   } catch (err) {
     console.error("Signup error:", err);
     res.status(500).json({ error: "Server error during registration" });
@@ -141,7 +147,7 @@ app.post("/api/auth/signup", async (req, res) => {
 });
 
 app.post("/api/auth/login", async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, role } = req.body;
   if (!email || !password) {
     return res.status(400).json({ error: "Please provide both an email and password to log in.", message: "Please provide both an email and password to log in." });
   }
@@ -150,6 +156,13 @@ app.post("/api/auth/login", async (req, res) => {
     const user = await prisma.user.findUnique({ where: { email: email.toLowerCase() } });
     if (!user) {
       return res.status(400).json({ error: "Invalid email or password. Please try again.", message: "Invalid email or password. Please try again." });
+    }
+
+    if (role) {
+      const mappedRole = role === "cashier" ? "employee" : role;
+      if (user.role !== mappedRole) {
+        return res.status(400).json({ error: "Invalid credentials for selected role.", message: "Invalid credentials for selected role." });
+      }
     }
 
     // Support both full password and shorthand aliases to cater to different user entries
@@ -174,9 +187,9 @@ app.post("/api/auth/login", async (req, res) => {
       return res.status(403).json({ error: "This employee account has been archived/disabled.", message: "This employee account has been archived/disabled." });
     }
 
-    const token = createToken({ id: user.id, name: user.name, email: user.email, role: user.role });
+    const token = createToken({ id: user.id, name: user.name, email: user.email, role: normalizeRole(user.role) });
     const { password: _, ...userNoPassword } = user;
-    res.json({ token, user: userNoPassword });
+    res.json({ token, user: { ...userNoPassword, role: normalizeRole(user.role) } });
   } catch (err) {
     console.error("Login error:", err);
     res.status(500).json({ error: "Server error during login" });
@@ -466,7 +479,7 @@ app.get(["/api/employees", "/api/users"], requireAuth, requireRole(["admin"]), a
     const employees = await prisma.user.findMany({
       select: { id: true, name: true, email: true, role: true, status: true, createdAt: true }
     });
-    res.json(employees);
+    res.json(employees.map(e => ({ ...e, role: normalizeRole(e.role) })));
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch employees" });
   }
@@ -491,13 +504,13 @@ app.post(["/api/employees", "/api/users"], requireAuth, requireRole(["admin"]), 
         name,
         email: email.toLowerCase(),
         password: generateHash(password),
-        role,
+        role: role === "cashier" ? "employee" : role,
         status: "active",
         createdAt: new Date().toISOString(),
       }
     });
 
-    res.json({ id: user.id, name: user.name, email: user.email, role: user.role, status: user.status });
+    res.json({ id: user.id, name: user.name, email: user.email, role: normalizeRole(user.role), status: user.status });
   } catch (err) {
     res.status(500).json({ error: "Failed to create employee account" });
   }
@@ -509,7 +522,7 @@ app.put(["/api/employees/:id", "/api/users/:id"], requireAuth, requireRole(["adm
     const updateData: any = {};
     if (name !== undefined) updateData.name = name;
     if (email !== undefined) updateData.email = email.toLowerCase();
-    if (role !== undefined) updateData.role = role;
+    if (role !== undefined) updateData.role = role === "cashier" ? "employee" : role;
     if (status !== undefined) updateData.status = status;
     if (password) updateData.password = generateHash(password);
 
@@ -522,7 +535,7 @@ app.put(["/api/employees/:id", "/api/users/:id"], requireAuth, requireRole(["adm
       id: user.id,
       name: user.name,
       email: user.email,
-      role: user.role,
+      role: normalizeRole(user.role),
       status: user.status,
     });
   } catch (err) {
@@ -1285,7 +1298,9 @@ async function startServer() {
     });
     app.use(vite.middlewares);
   } else {
-    const distPath = path.join(process.cwd(), "dist");
+    const distPath = fs.existsSync(path.join(process.cwd(), "dist"))
+      ? path.join(process.cwd(), "dist")
+      : path.join(process.cwd(), "../frontend/dist");
     app.use(express.static(distPath));
     // Serve index.html for SPA
     app.get("*", (req, res) => {
