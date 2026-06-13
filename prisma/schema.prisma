@@ -1,0 +1,132 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String @id
+  name      String
+  email     String @unique
+  password  String
+  role      String
+  status    String @default("active")
+  createdAt String
+}
+
+model Category {
+  id        String    @id
+  name      String
+  color     String
+  createdAt String
+  products  Product[]
+}
+
+model Product {
+  id            String   @id
+  name          String
+  categoryId    String
+  category      Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  price         Float
+  unit          String
+  tax           Float
+  description   String
+  image         String
+  isKitchenItem Boolean
+  createdAt     String
+}
+
+model Floor {
+  id     String  @id
+  name   String
+  tables Table[]
+}
+
+model Table {
+  id          String  @id
+  tableNumber String  @unique
+  seats       Int
+  floorId     String
+  floor       Floor   @relation(fields: [floorId], references: [id], onDelete: Cascade)
+  active      Boolean @default(true)
+  status      String  @default("available")
+}
+
+model Customer {
+  id    String @id
+  name  String
+  email String @unique
+  phone String
+}
+
+model Coupon {
+  id            String  @id
+  code          String  @unique
+  discountType  String
+  discountValue Float
+  active        Boolean @default(true)
+}
+
+model Promotion {
+  id                 String  @id
+  promotionType      String
+  minimumQuantity    Int?
+  minimumOrderAmount Float?
+  discountType       String
+  discountValue      Float
+  active             Boolean @default(true)
+  description        String
+}
+
+model Order {
+  id            String      @id
+  orderNumber   String      @unique
+  tableId       String?
+  customerId    String?
+  employeeId    String?
+  items         OrderItem[]
+  subtotal      Float
+  tax           Float
+  discount      Float
+  total         Float
+  paymentMethod String?
+  status        String      @default("draft")
+  createdAt     String
+  notes         String?
+}
+
+model OrderItem {
+  id            String  @id @default(uuid())
+  orderId       String
+  order         Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId     String
+  productName   String
+  quantity      Int
+  price         Float
+  tax           Float
+  discount      Float
+  lineTotal     Float
+  isKitchenItem Boolean
+  completed     Boolean @default(false)
+  notes         String?
+}
+
+model Session {
+  id             String  @id
+  openedAt       String
+  closedAt       String?
+  openingBalance Float
+  closingAmount  Float?
+  status         String  @default("open")
+  employeeId     String
+}
+
+model PaymentSettings {
+  id          String  @id @default("payment-settings-id")
+  cashEnabled Boolean @default(true)
+  cardEnabled Boolean @default(true)
+  upiEnabled  Boolean @default(true)
+  upiVpa      String  @default("cafeflow@ybl")
+}
