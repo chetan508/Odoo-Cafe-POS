@@ -1,0 +1,26 @@
+[
+  {
+    "file": "backend/src/server.ts",
+    "replacementsCount": 1
+  },
+  {
+    "file": "frontend/src/App.tsx",
+    "replacementsCount": 2
+  },
+  {
+    "file": "frontend/src/components/AdminPanel.tsx",
+    "replacementsCount": 5
+  },
+  {
+    "file": "frontend/src/components/LoginScreen.tsx",
+    "replacementsCount": 1
+  },
+  {
+    "file": "frontend/src/components/ReceiptModal.tsx",
+    "replacementsCount": 8
+  },
+  {
+    "file": "metadata.json",
+    "replacementsCount": 2
+  }
+]
