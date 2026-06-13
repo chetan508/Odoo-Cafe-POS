@@ -1,0 +1,462 @@
+{
+  "users": [
+    {
+      "id": "u-1",
+      "name": "Chef Alexander",
+      "email": "admin@cafeflow.com",
+      "password": "749f09bade8aca755660eeb17792da880218d4fbdc4e25fbec279d7fe9f65d70",
+      "role": "admin",
+      "status": "active",
+      "createdAt": "2026-06-13T05:44:17.493Z"
+    },
+    {
+      "id": "u-2",
+      "name": "Sarah Parker",
+      "email": "cashier@cafeflow.com",
+      "password": "8bf94c571e2aca86383aabeba9b7efb2677723360a2930fc5ba60d7e9545ba10",
+      "role": "employee",
+      "status": "active",
+      "createdAt": "2026-06-13T05:44:17.494Z"
+    },
+    {
+      "id": "u-3",
+      "name": "Marcus Miller",
+      "email": "kitchen@cafeflow.com",
+      "password": "46d4216f5b840e1eb49dacfb3bc29e56da0dd235c0b85e45b9d479dbda5e9504",
+      "role": "kitchen",
+      "status": "active",
+      "createdAt": "2026-06-13T05:44:17.494Z"
+    }
+  ],
+  "categories": [
+    {
+      "id": "cat-1",
+      "name": "Specialty Coffee",
+      "color": "#8B5CF6",
+      "createdAt": "2026-06-13T05:44:17.494Z"
+    },
+    {
+      "id": "cat-2",
+      "name": "Artisan Sandwiches",
+      "color": "#F59E0B",
+      "createdAt": "2026-06-13T05:44:17.494Z"
+    },
+    {
+      "id": "cat-3",
+      "name": "Decadent Desserts",
+      "color": "#EC4899",
+      "createdAt": "2026-06-13T05:44:17.494Z"
+    },
+    {
+      "id": "cat-4",
+      "name": "Refreshing Beverages",
+      "color": "#0D9488",
+      "createdAt": "2026-06-13T05:44:17.494Z"
+    }
+  ],
+  "products": [
+    {
+      "id": "prod-1",
+      "name": "Iced Lavender Latte",
+      "categoryId": "cat-1",
+      "price": 280,
+      "unit": "glass",
+      "tax": 5,
+      "description": "Smooth signature espresso shot poured with chilled oat milk and raw French organic lavender blossoms syrup.",
+      "image": "https://images.unsplash.com/photo-1517701604599-bb29b56509d1?auto=format&fit=crop&q=80&w=300",
+      "isKitchenItem": true,
+      "createdAt": "2026-06-13T05:44:17.494Z"
+    },
+    {
+      "id": "prod-2",
+      "name": "Roasted Pistachio Espresso",
+      "categoryId": "cat-1",
+      "price": 295,
+      "unit": "cup",
+      "tax": 5,
+      "description": "Signature draft hot espresso layered with custom-whipped pistachio paste and light milk foam dust.",
+      "image": "https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&q=80&w=300",
+      "isKitchenItem": true,
+      "createdAt": "2026-06-13T05:44:17.494Z"
+    },
+    {
+      "id": "prod-3",
+      "name": "Truffle Mushroom Toast",
+      "categoryId": "cat-2",
+      "price": 420,
+      "unit": "portion",
+      "tax": 12,
+      "description": "Warm artisanal sourdough covered with crushed wild forest mushroom sauce, and layers of melted French brie cheese.",
+      "image": "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&q=80&w=300",
+      "isKitchenItem": true,
+      "createdAt": "2026-06-13T05:44:17.494Z"
+    },
+    {
+      "id": "prod-4",
+      "name": "Smashed Avocado Sourdough",
+      "categoryId": "cat-2",
+      "price": 380,
+      "unit": "portion",
+      "tax": 12,
+      "description": "Creamy avocado mix with premium Himalayan pink salt, roasted lemon splash and perfect poached organic egg on top.",
+      "image": "https://images.unsplash.com/photo-1541532713592-79a0317b6b77?auto=format&fit=crop&q=80&w=300",
+      "isKitchenItem": true,
+      "createdAt": "2026-06-13T05:44:17.494Z"
+    },
+    {
+      "id": "prod-5",
+      "name": "Red Velvet Molten Cake",
+      "categoryId": "cat-3",
+      "price": 260,
+      "unit": "portion",
+      "tax": 18,
+      "description": "Baked dark cocoa sponge cake containing warm white chocolate fudge inside that cascades beautifully upon first bite.",
+      "image": "https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?auto=format&fit=crop&q=80&w=300",
+      "isKitchenItem": true,
+      "createdAt": "2026-06-13T05:44:17.494Z"
+    },
+    {
+      "id": "prod-6",
+      "name": "Matcha Matcha Macaron",
+      "categoryId": "cat-3",
+      "price": 120,
+      "unit": "pcs",
+      "tax": 18,
+      "description": "Crisp almond flour paste macaron cookies filled with premium hand-whisked Kyoto Uji matcha cream.",
+      "image": "https://images.unsplash.com/photo-1569864358642-9d1684040f43?auto=format&fit=crop&q=80&w=300",
+      "isKitchenItem": false,
+      "createdAt": "2026-06-13T05:44:17.494Z"
+    },
+    {
+      "id": "prod-7",
+      "name": "Nitro Cold Brew Coffee",
+      "categoryId": "cat-4",
+      "price": 240,
+      "unit": "glass",
+      "tax": 5,
+      "description": "Meticulously brewed cold coffee charged directly using pressurized nitrogen taps, forming a velvety creamy draft texture.",
+      "image": "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&q=80&w=300",
+      "isKitchenItem": false,
+      "createdAt": "2026-06-13T05:44:17.494Z"
+    },
+    {
+      "id": "prod-8",
+      "name": "Hibiscus Rosemary Tonic",
+      "categoryId": "cat-4",
+      "price": 190,
+      "unit": "glass",
+      "tax": 5,
+      "description": "Floral blend of dried hibiscus herbal extract and botanical tonic water finished with an aromatic charred rosemary sprig.",
+      "image": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&q=80&w=300",
+      "isKitchenItem": true,
+      "createdAt": "2026-06-13T05:44:17.494Z"
+    }
+  ],
+  "floors": [
+    {
+      "id": "floor-1",
+      "name": "Ground floor"
+    },
+    {
+      "id": "floor-2",
+      "name": "Mezzanine Lounge"
+    },
+    {
+      "id": "floor-3",
+      "name": "Garden Terrace"
+    }
+  ],
+  "tables": [
+    {
+      "id": "tb-1",
+      "tableNumber": "G-1",
+      "seats": 2,
+      "floorId": "floor-1",
+      "active": true,
+      "status": "available"
+    },
+    {
+      "id": "tb-2",
+      "tableNumber": "G-2",
+      "seats": 4,
+      "floorId": "floor-1",
+      "active": true,
+      "status": "available"
+    },
+    {
+      "id": "tb-3",
+      "tableNumber": "G-3",
+      "seats": 4,
+      "floorId": "floor-1",
+      "active": true,
+      "status": "available"
+    },
+    {
+      "id": "tb-4",
+      "tableNumber": "G-4",
+      "seats": 6,
+      "floorId": "floor-1",
+      "active": true,
+      "status": "occupied"
+    },
+    {
+      "id": "tb-5",
+      "tableNumber": "G-5",
+      "seats": 2,
+      "floorId": "floor-1",
+      "active": true,
+      "status": "reserved"
+    },
+    {
+      "id": "tb-6",
+      "tableNumber": "M-1",
+      "seats": 2,
+      "floorId": "floor-2",
+      "active": true,
+      "status": "available"
+    },
+    {
+      "id": "tb-7",
+      "tableNumber": "M-2",
+      "seats": 4,
+      "floorId": "floor-2",
+      "active": true,
+      "status": "available"
+    },
+    {
+      "id": "tb-8",
+      "tableNumber": "M-3",
+      "seats": 2,
+      "floorId": "floor-2",
+      "active": true,
+      "status": "available"
+    },
+    {
+      "id": "tb-9",
+      "tableNumber": "T-1",
+      "seats": 4,
+      "floorId": "floor-3",
+      "active": true,
+      "status": "available"
+    },
+    {
+      "id": "tb-10",
+      "tableNumber": "T-2",
+      "seats": 4,
+      "floorId": "floor-3",
+      "active": true,
+      "status": "available"
+    },
+    {
+      "id": "tb-11",
+      "tableNumber": "T-3",
+      "seats": 6,
+      "floorId": "floor-3",
+      "active": true,
+      "status": "occupied"
+    }
+  ],
+  "customers": [
+    {
+      "id": "cust-1",
+      "name": "Elena Rostova",
+      "email": "elena@yahoo.com",
+      "phone": "+91 98765 00123"
+    },
+    {
+      "id": "cust-2",
+      "name": "Aarav Sharma",
+      "email": "aarav@gmail.com",
+      "phone": "+91 81223 99882"
+    },
+    {
+      "id": "cust-3",
+      "name": "Rohan Varma",
+      "email": "rohan@outlook.com",
+      "phone": "+91 76543 44551"
+    }
+  ],
+  "coupons": [
+    {
+      "id": "cp-1",
+      "code": "WELCOME100",
+      "discountType": "fixed",
+      "discountValue": 100,
+      "active": true
+    },
+    {
+      "id": "cp-2",
+      "code": "FEAST15",
+      "discountType": "percentage",
+      "discountValue": 15,
+      "active": true
+    },
+    {
+      "id": "cp-3",
+      "code": "SUPER50",
+      "discountType": "fixed",
+      "discountValue": 50,
+      "active": true
+    }
+  ],
+  "promotions": [
+    {
+      "id": "pm-1",
+      "promotionType": "buy_x_get_y",
+      "minimumQuantity": 3,
+      "discountType": "percentage",
+      "discountValue": 10,
+      "active": true,
+      "description": "Buy 3 or more beverages, get 10% off beverage items automatically"
+    },
+    {
+      "id": "pm-2",
+      "promotionType": "order_discount",
+      "minimumOrderAmount": 1000,
+      "discountType": "fixed",
+      "discountValue": 100,
+      "active": true,
+      "description": "Orders over ₹1000 receive a ₹100 flat discount instantly"
+    }
+  ],
+  "orders": [
+    {
+      "id": "ord-1",
+      "orderNumber": "CF-1001",
+      "tableId": "tb-4",
+      "customerId": "cust-1",
+      "employeeId": "u-2",
+      "items": [
+        {
+          "productId": "prod-1",
+          "productName": "Iced Lavender Latte",
+          "quantity": 2,
+          "price": 280,
+          "tax": 28,
+          "discount": 0,
+          "lineTotal": 560,
+          "isKitchenItem": true,
+          "completed": true
+        },
+        {
+          "productId": "prod-3",
+          "productName": "Truffle Mushroom Toast",
+          "quantity": 1,
+          "price": 420,
+          "tax": 50.4,
+          "discount": 0,
+          "lineTotal": 420,
+          "isKitchenItem": true,
+          "completed": true
+        }
+      ],
+      "subtotal": 980,
+      "tax": 78.4,
+      "discount": 100,
+      "total": 958.4,
+      "paymentMethod": "cash",
+      "status": "paid",
+      "createdAt": "2026-06-13T02:44:17.494Z"
+    },
+    {
+      "id": "ord-2",
+      "orderNumber": "CF-1002",
+      "tableId": "tb-11",
+      "customerId": "cust-2",
+      "employeeId": "u-2",
+      "items": [
+        {
+          "productId": "prod-4",
+          "productName": "Smashed Avocado Sourdough",
+          "quantity": 2,
+          "price": 380,
+          "tax": 91.2,
+          "discount": 0,
+          "lineTotal": 760,
+          "isKitchenItem": true,
+          "completed": true
+        },
+        {
+          "productId": "prod-7",
+          "productName": "Nitro Cold Brew Coffee",
+          "quantity": 2,
+          "price": 240,
+          "tax": 24,
+          "discount": 0,
+          "lineTotal": 480,
+          "isKitchenItem": false,
+          "completed": true
+        }
+      ],
+      "subtotal": 1240,
+      "tax": 115.2,
+      "discount": 100,
+      "total": 1255.2,
+      "paymentMethod": "card",
+      "status": "paid",
+      "createdAt": "2026-06-13T03:44:17.494Z"
+    },
+    {
+      "id": "ord-3",
+      "orderNumber": "CF-1003",
+      "tableId": "tb-4",
+      "customerId": "cust-3",
+      "employeeId": "u-2",
+      "items": [
+        {
+          "productId": "prod-2",
+          "productName": "Roasted Pistachio Espresso",
+          "quantity": 3,
+          "price": 295,
+          "tax": 44.25,
+          "discount": 88.5,
+          "lineTotal": 796.5,
+          "isKitchenItem": true,
+          "completed": false
+        },
+        {
+          "productId": "prod-5",
+          "productName": "Red Velvet Molten Cake",
+          "quantity": 1,
+          "price": 260,
+          "tax": 46.8,
+          "discount": 0,
+          "lineTotal": 260,
+          "isKitchenItem": true,
+          "completed": false
+        }
+      ],
+      "subtotal": 1145,
+      "tax": 91.05,
+      "discount": 188.5,
+      "total": 1047.55,
+      "paymentMethod": "upi",
+      "status": "paid",
+      "createdAt": "2026-06-13T05:44:17.494Z"
+    }
+  ],
+  "sessions": [
+    {
+      "id": "sess-1",
+      "openedAt": "2026-06-13T01:44:17.494Z",
+      "closedAt": "2026-06-13T04:44:17.494Z",
+      "openingBalance": 5000,
+      "closingAmount": 6730,
+      "status": "closed",
+      "employeeId": "u-2"
+    },
+    {
+      "id": "sess-2",
+      "openedAt": "2026-06-13T05:44:17.494Z",
+      "openingBalance": 6000,
+      "status": "open",
+      "employeeId": "u-2"
+    }
+  ],
+  "paymentSettings": {
+    "cashEnabled": true,
+    "cardEnabled": true,
+    "upiEnabled": true,
+    "upiVpa": "cafeflow@ybl"
+  }
+}
