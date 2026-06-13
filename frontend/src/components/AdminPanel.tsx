@@ -689,8 +689,9 @@ export default function AdminPanel({
                     <input
                       type="number"
                       required
+                      min="0"
                       value={prodForm.price}
-                      onChange={(e) => setProdForm({ ...prodForm, price: Number(e.target.value) })}
+                      onChange={(e) => setProdForm({ ...prodForm, price: Math.max(0, Number(e.target.value)) })}
                       className="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-xs outline-none focus:border-purple-500"
                     />
                   </div>
@@ -723,8 +724,9 @@ export default function AdminPanel({
                     <label className="text-[10px] font-bold text-gray-400 uppercase">Tax Rate (CGST+SGST %)</label>
                     <input
                       type="number"
+                      min="0"
                       value={prodForm.tax}
-                      onChange={(e) => setProdForm({ ...prodForm, tax: Number(e.target.value) })}
+                      onChange={(e) => setProdForm({ ...prodForm, tax: Math.max(0, Number(e.target.value)) })}
                       className="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-xs outline-none focus:border-purple-500"
                       placeholder="5, 12, 18"
                     />
@@ -1080,8 +1082,9 @@ export default function AdminPanel({
                     <input
                       type="number"
                       required
+                      min="1"
                       value={tableForm.seats}
-                      onChange={(e) => setTableForm({ ...tableForm, seats: Number(e.target.value) })}
+                      onChange={(e) => setTableForm({ ...tableForm, seats: Math.max(1, Number(e.target.value)) })}
                       className="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-xs outline-none focus:border-purple-500"
                     />
                   </div>
@@ -1344,8 +1347,9 @@ export default function AdminPanel({
                     <input
                       type="number"
                       required
+                      min="0"
                       value={couponForm.discountValue}
-                      onChange={(e) => setCouponForm({ ...couponForm, discountValue: Number(e.target.value) })}
+                      onChange={(e) => setCouponForm({ ...couponForm, discountValue: Math.max(0, Number(e.target.value)) })}
                       className="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-xs outline-none focus:border-purple-500"
                     />
                   </div>
@@ -1423,9 +1427,10 @@ export default function AdminPanel({
                     <input
                       type="number"
                       required
+                      min="0"
                       value={promoForm.promotionType === "buy_x_get_y" ? (promoForm.minimumQuantity || 3) : (promoForm.minimumOrderAmount || 1000)}
                       onChange={(e) => {
-                        const val = Number(e.target.value);
+                        const val = Math.max(0, Number(e.target.value));
                         if (promoForm.promotionType === "buy_x_get_y") {
                           setPromoForm({ ...promoForm, minimumQuantity: val });
                         } else {
@@ -1453,8 +1458,9 @@ export default function AdminPanel({
                     <input
                       type="number"
                       required
+                      min="0"
                       value={promoForm.discountValue}
-                      onChange={(e) => setPromoForm({ ...promoForm, discountValue: Number(e.target.value) })}
+                      onChange={(e) => setPromoForm({ ...promoForm, discountValue: Math.max(0, Number(e.target.value)) })}
                       className="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-xs outline-none focus:border-purple-500"
                     />
                   </div>
@@ -1728,8 +1734,9 @@ export default function AdminPanel({
                   <span className="text-[10px] text-gray-400 uppercase font-bold">Multiplier:</span>
                   <input
                     type="number"
+                    min="0"
                     value={loyaltyMultiplier}
-                    onChange={(e) => setLoyaltyMultiplier(Number(e.target.value))}
+                    onChange={(e) => setLoyaltyMultiplier(Math.max(0, Number(e.target.value)))}
                     className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-mono font-bold w-20 outline-none focus:border-purple-500"
                   />
                   <span className="text-[10px] text-purple-600 font-semibold">x point rewards</span>

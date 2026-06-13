@@ -111,15 +111,7 @@ export default function KitchenDisplay({
   if (isLoading) {
     return (
       <div className="flex h-full w-full flex-col bg-[#FAF7F2] text-[#2B2B2B] font-sans">
-        <header className="flex items-center justify-between border-b border-[#E6DDD2] bg-[#FFFFFF] px-6 py-4">
-          <div className="flex items-center gap-3">
-            <BrandLogo size="md" />
-            <div>
-              <h1 className="font-display text-lg font-black text-[#3E2723]">Kitchen Portal</h1>
-              <p className="text-xs text-[#6F4E37] font-semibold">CafeFlow Point of Sale real-time kitchen monitors</p>
-            </div>
-          </div>
-        </header>
+
         <div className="flex-1 flex flex-col items-center justify-center bg-[#FAF7F2] text-[#6F4E37]">
           <div className="text-center font-display space-y-4">
             <div className="flex items-center justify-center">
@@ -136,15 +128,7 @@ export default function KitchenDisplay({
   if (error) {
     return (
       <div className="flex h-full w-full flex-col bg-[#FAF7F2] text-[#2B2B2B] font-sans">
-        <header className="flex items-center justify-between border-b border-[#E6DDD2] bg-[#FFFFFF] px-6 py-4">
-          <div className="flex items-center gap-3">
-            <BrandLogo size="md" />
-            <div>
-              <h1 className="font-display text-lg font-black text-[#3E2723]">Kitchen Portal</h1>
-              <p className="text-xs text-[#6F4E37] font-semibold">CafeFlow Point of Sale real-time kitchen monitors</p>
-            </div>
-          </div>
-        </header>
+
         <div className="flex-1 flex items-center justify-center p-6">
           <div className="max-w-md w-full text-center bg-white border border-[#E6DDD2] rounded-2xl p-8 shadow-[0_8px_30px_rgba(111,78,55,0.06)]">
             <div className="h-14 w-14 bg-[#FFF9EB] border border-[#C8A96B]/30 rounded-full mx-auto flex items-center justify-center mb-4">
@@ -162,31 +146,7 @@ export default function KitchenDisplay({
   return (
     <div className="flex h-full flex-col bg-[#FAF7F2] text-[#2B2B2B] font-sans">
       
-      {/* KDS Header Banner */}
-      <header className="flex items-center justify-between border-b border-[#E6DDD2] bg-[#FFFFFF] px-6 py-4">
-        <div className="flex items-center gap-3">
-          <BrandLogo size="md" />
-          <div>
-            <h1 className="font-display text-lg font-black text-[#3E2723]">Kitchen Portal</h1>
-            <p className="text-xs text-[#6F4E37] font-semibold">CafeFlow Point of Sale real-time kitchen monitors</p>
-          </div>
-        </div>
 
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2 rounded-full bg-[#FFF9EB] border border-[#C8A96B]/30 px-3 py-1 text-xs">
-            <span className="h-2 w-2 rounded-full bg-[#C8A96B] pulsing-ring" />
-            <span className="text-[#6F4E37] font-semibold">Live Listening Node (SSE Active)</span>
-          </div>
-
-          <button
-            onClick={triggerNotificationSound}
-            className="rounded-xl border border-[#E6DDD2] bg-[#FAF7F2] p-2 text-[#6F4E37] hover:bg-[#F5EFE6] transition cursor-pointer"
-            title="Test Kitchen Buzzer Sound Alarm"
-          >
-            <Bell className="h-4 w-4" />
-          </button>
-        </div>
-      </header>
 
       {/* KDS Body Columns (To Cook -> Preparing -> Completed) */}
       <div className="grid flex-1 grid-cols-1 gap-6 overflow-hidden p-6 md:grid-cols-3">
